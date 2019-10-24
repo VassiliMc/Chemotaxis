@@ -34,7 +34,7 @@ int tracker = 0;
  		if(oop[i] != 1){
  			batch[i].show();
  		}
- 		if(xPosition[i] == xPositionH[i] && yPosition[i] == yPositionH[i]){
+ 		if(xPositionH[i]+10 > xPosition[i] && xPosition[i] > xPositionH[i]-10 && yPositionH[i]+10 > yPosition[i] && yPosition[i] > yPositionH[i]-10){
  			batch[i].hide();
  			oop[i] = 1;
  		}
@@ -42,8 +42,15 @@ int tracker = 0;
 	}
 	for(int i = 0; i < pack.length ; i++){
 		tracker = i;
- 		pack[i].move(xPosition[i], yPosition[i]);
+ 		if(oop[i] != 1){
+ 			pack[i].move(xPosition[i], yPosition[i]);
+ 		} else {
+ 			pack[i].finish();
+ 		}
  		pack[i].show();
+ 		if(xPositionH[i]+10 > xPosition[i] && xPosition[i] > xPositionH[i]-10 && yPositionH[i]+10 > yPosition[i] && yPosition[i] > yPositionH[i]-10){
+ 			oop[i] = 1;
+ 		}
 	}
  }
  class Muncher{
@@ -55,6 +62,20 @@ int tracker = 0;
  		mySize = size;
  		myColour = colour;
  	}
+ 	void finish(){
+ 		if(myX < sizeX/2){
+ 			myX = myX + (Math.random()*(mySize/3)-mySize/7);
+ 		} else {
+ 			myX = myX + (Math.random()*(mySize/3))-mySize/3;
+ 		}
+ 		if(myY < sizeY/2){
+ 			myY = myY + (Math.random()*(mySize/3)-mySize/7);
+ 		} else {
+ 			myY = myY + (Math.random()*(mySize/3))-mySize/3;
+ 		}
+ 		xPositionH[tracker] = myX + mySize/2;
+ 		yPositionH[tracker] = myY + mySize/2;
+ 	}
  	void show(){
  		stroke(myColour);
  		fill(myColour);
@@ -62,14 +83,30 @@ int tracker = 0;
  	}
  	void move(double x, double y){
  		if(x > myX){
- 			myX = myX + (Math.random()*(mySize/3)-mySize/7);
+ 			if(myX > sizeX/2){
+ 				myX = myX + (Math.random()*(mySize/3)-mySize*(myX/4200));
+ 			} else {
+ 				myX = myX + (Math.random()*(mySize/3))-mySize/7;
+ 			}
  		} else {
- 			myX = myX + (Math.random()*(mySize/3))-mySize/3;
+ 			if(myX < sizeX/2){
+ 				myX = myX + (Math.random()*(mySize/3)-mySize*(myX/1800));
+ 			} else {
+ 				myX = myX + (Math.random()*(mySize/3))-mySize/3;
+ 			};
  		}
  		if(y > myY){
- 			myY = myY + (Math.random()*(mySize/3)-mySize/7);
+ 			if(myY > sizeY/2){
+ 				myY = myY + (Math.random()*(mySize/3)-mySize*(myY/4200));
+ 			} else {
+ 				myY = myY + (Math.random()*(mySize/3))-mySize/7;
+ 			}
  		} else {
- 			myY = myY + (Math.random()*(mySize/3))-mySize/3;
+ 			if(myY < sizeY/2){
+ 				myY = myY + (Math.random()*(mySize/3)-mySize*(myY/1800));
+ 			} else {
+ 				myY = myY + (Math.random()*(mySize/3))-mySize/3;
+ 			};
  		}
  		xPositionH[tracker] = myX + mySize/2;
  		yPositionH[tracker] = myY + mySize/2;
@@ -93,14 +130,30 @@ int tracker = 0;
  	}
  	void move(double x, double y){
  		if(x < myX && myX < sizeX - 100){
- 			myX = myX + (Math.random()*(mySize/2)-mySize/5);
+ 			if(myX > sizeX/2){
+ 				myX = myX + (Math.random()*(mySize/2)-mySize*(myX/3000));
+ 			} else {
+ 				myX = myX + (Math.random()*(mySize/2))-mySize/5;
+ 			}
  		} else if(myX > 100){
- 			myX = myX + (Math.random()*(mySize/2))-mySize/2;
+ 			if(myX < sizeX/2){
+ 				myX = myX + (Math.random()*(mySize/2)-mySize*(myX/1200));
+ 			} else {
+ 				myX = myX + (Math.random()*(mySize/2))-mySize/2;
+ 			};
  		}
  		if(y < myY && myY < sizeY - 100){
- 			myY = myY + (Math.random()*(mySize/2)-mySize/5);
+ 			if(myY > sizeY/2){
+ 				myY = myY + (Math.random()*(mySize/2)-mySize*(myY/3000));
+ 			} else {
+ 				myY = myY + (Math.random()*(mySize/2))-mySize/5;
+ 			}
  		} else if(myY > 100) {
- 			myY = myY + (Math.random()*(mySize/2))-mySize/2;
+ 			if(myY < sizeY/2){
+ 				myY = myY + (Math.random()*(mySize/2)-mySize*(myY/1200));
+ 			} else {
+ 				myY = myY + (Math.random()*(mySize/2))-mySize/2;
+ 			};
  		}
  		xPosition[tracker] = myX;
  		yPosition[tracker] = myY;
